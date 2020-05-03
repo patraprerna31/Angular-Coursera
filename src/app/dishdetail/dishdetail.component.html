@@ -1,5 +1,5 @@
 <div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" [@expand]>
         <div fxFlex>
             <mat-card>
                 <mat-card-header>
@@ -7,7 +7,7 @@
                         <h3> {{dish.name | uppercase}}</h3>
                     </mat-card-title>
                 </mat-card-header>
-                <img mat-card-image src={{dish.image}} alt={{dish.name}}>
+                <img mat-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
                 <mat-card-content>
                     <p>{{dish.description}}</p>
                 </mat-card-content>
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" [@expand]>
         <div class="container" fxLayout="row">
             <div>
                 <div fxFlex>
@@ -59,7 +59,7 @@
                                         <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>
                                     </mat-form-field>
                                 </p>
-                                <mat-slider min="1" max="5" step="1" tickInterval="1" formControlName="rating"></mat-slider>
+                                <mat-slider min="1" max="5" step="1" value="5" thumbLabel tickInterval="1" formControlName="rating"></mat-slider>
                                 <p>
                                     <mat-form-field class="full-width">
                                         <textarea matInput formControlName="comment" placeholder="Your Comment" rows=8></textarea>
@@ -75,8 +75,12 @@
 
         </div>
     </div>
-    <div [hidden]="dish">
+    <div [hidden]="dish || errMess">
         <mat-spinner></mat-spinner>
         <h4>Loading . . . Please Wait</h4>
+    </div>
+    <div fxFlex *ngIf="errMess">
+        <h2>Error</h2>
+        <h4>{{errMess}}</h4>
     </div>
 </div>
